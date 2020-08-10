@@ -1,0 +1,323 @@
+query getUsers {
+  users {
+    id
+    username
+    firstName
+    lastName
+    email
+    isSuperuser
+    isStaff
+    isActive
+    articles {
+      id
+      title
+      body
+      createdAt
+      modifiedAt
+    }
+  }
+}
+
+query getUser($id: Int = 1) {
+  user(id: $id) {
+    id
+    username
+    firstName
+    lastName
+    email
+    isSuperuser
+    isStaff
+    isActive
+    articles {
+      id
+      title
+      body
+      createdAt
+      modifiedAt
+    }
+  }
+}
+
+query getArticles {
+  articles {
+    id
+    title
+    body
+    type
+    tags
+    creator {
+      id
+      username
+      firstName
+      lastName
+      email
+      isSuperuser
+      isStaff
+      isActive
+    }
+    createdAt
+    modifiedAt
+    images {
+      id
+      name
+      createdAt
+      modifiedAt
+    }
+  }
+}
+
+query getArticle($id: Int = 1) {
+  article(id: $id) {
+    id
+    title
+    body
+    type
+    tags
+    creator {
+      id
+      username
+      firstName
+      lastName
+      email
+      isSuperuser
+      isStaff
+      isActive
+    }
+    createdAt
+    modifiedAt
+    images {
+      id
+      name
+      createdAt
+      modifiedAt
+    }
+  }
+}
+
+query getArticleImages {
+  articleImages {
+    id
+    name
+    image
+    thumbnailImage
+    createdAt
+    modifiedAt
+    article {
+      id
+      title
+      body
+      createdAt
+      modifiedAt
+    }
+  }
+}
+
+query getArticleImage($id: Int = 6) {
+  articleImage(id: $id) {
+    id
+    name
+    image
+    thumbnailImage
+    createdAt
+    modifiedAt
+    article {
+      id
+      title
+      body
+      createdAt
+      modifiedAt
+    }
+  }
+}
+
+mutation createArticleImage($articleImage: ArticleImageInput = {name: "ArticleImage1002", article: {id: 2}}) {
+  createArticleImage(Input: $articleImage) {
+    ok
+    articleImage {
+      id
+      name
+      image
+      thumbnailImage
+      createdAt
+      modifiedAt
+      article {
+        id
+        title
+        body
+        createdAt
+        modifiedAt
+      }
+    }
+  }
+}
+
+mutation updateArticleImage($id: Int = 6, $articleImage: ArticleImageInput = {name: "ArticleImage1005", article: {id: 1}}) {
+  updateArticleImage(Id: $id, Input: $articleImage) {
+    ok
+    articleImage {
+      id
+      name
+      image
+      thumbnailImage
+      createdAt
+      modifiedAt
+      article {
+        id
+        title
+        body
+        createdAt
+        modifiedAt
+      }
+    }
+  }
+}
+
+mutation deleteArticleImage($id: Int = 6) {
+  deleteArticleImage(Id: $id) {
+    ok
+  }
+}
+
+mutation createArticle($article: ArticleInput = {title: "TestArticleABC", body: "Test article body", type: INFORMATION_TECHNOLOGY, tags: ["test_a", "test_b"], creator: {id: "1"}}) {
+  createArticle(Input: $article) {
+    ok
+    article {
+      id
+      title
+      body
+      type
+      tags
+      createdAt
+      modifiedAt
+      creator {
+        id
+        username
+        firstName
+        lastName
+        email
+        isSuperuser
+        isStaff
+        isActive
+      }
+    }
+  }
+}
+
+mutation updateArticle($id: Int = 9, $article: ArticleInput = {title: "TestArticleABC234", body: "Test article body 123", type: ART, tags: ["test_a1", "test_b1"], creator: {id: 1}}) {
+  updateArticle(Id: $id, Input: $article) {
+    ok
+    article {
+      id
+      title
+      body
+      type
+      tags
+      createdAt
+      modifiedAt
+      creator {
+        id
+        username
+        firstName
+        lastName
+        email
+        isSuperuser
+        isStaff
+        isActive
+      }
+    }
+  }
+}
+
+mutation deleteArticle($id: Int = 1) {
+  deleteArticle(Id: $id) {
+    ok
+  }
+}
+
+mutation createUser($user: UserInput = {username: "user_staff", password: "PKklop09", firstName: "user", lastName: "staff", email: "pkrasniuk@outlook.com", isSuperuser: false, isStaff: true, isActive: true}) {
+  createUser(Input: $user) {
+    ok
+    user {
+      id
+      username
+      firstName
+      lastName
+      email
+      isSuperuser
+      isStaff
+      isActive
+    }
+  }
+}
+
+mutation updateUser($id: Int = 2, $user: UserInput = {username: "user_staff_007"}) {
+  updateUser(Id: $id, Input: $user) {
+    ok
+    user {
+      id
+      username
+      firstName
+      lastName
+      email
+      isSuperuser
+      isStaff
+      isActive
+    }
+  }
+}
+
+mutation deleteUser($id: Int = 3) {
+  deleteUser(Id: $id) {
+    ok
+  }
+}
+
+mutation TokenAuth($username: String = "admin", $password: String = "PKklop09") {
+  tokenAuth(username: $username, password: $password) {
+    token
+    payload
+    refreshExpiresIn
+  }
+}
+
+mutation VerifyToken($token: String = "") {
+  verifyToken(token: $token) {
+    payload
+  }
+}
+
+mutation RefreshToken($token: String = "") {
+  refreshToken(token: $token) {
+    token
+    payload
+    refreshExpiresIn
+  }
+}
+
+query getArticleList($search: String = "", $first: Int = 2, $skip: Int = 2) {
+  articleList(search: $search, first: $first, skip: $skip) {
+    id
+    title
+    body
+    type
+    tags
+    creator {
+      id
+      username
+      firstName
+      lastName
+      email
+      isSuperuser
+      isStaff
+      isActive
+    }
+    createdAt
+    modifiedAt
+    images {
+      id
+      name
+      createdAt
+      modifiedAt
+    }
+  }
+}
