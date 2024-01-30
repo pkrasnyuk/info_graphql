@@ -3,7 +3,7 @@ import redis
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg import openapi
 from drf_yasg.app_settings import swagger_settings
-from drf_yasg.inspectors import CoreAPICompatInspector, NotHandled, FieldInspector, SwaggerAutoSchema
+from drf_yasg.inspectors import CoreAPICompatInspector, FieldInspector, NotHandled, SwaggerAutoSchema
 
 from info_graphql.settings import CACHEOPS_REDIS
 
@@ -27,7 +27,7 @@ class DjangoFilterDescriptionInspector(CoreAPICompatInspector):
         if isinstance(filter_backend, DjangoFilterBackend):
             result = super(DjangoFilterDescriptionInspector, self).get_filter_parameters(filter_backend)
             for param in result:
-                if not param.get('description', ''):
+                if not param.get("description", ""):
                     param.description = "Filter the returned list by {field_name}".format(field_name=param.name)
 
             return result
@@ -39,7 +39,7 @@ class NoSchemaTitleInspector(FieldInspector):
     def process_result(self, result, method_name, obj, **kwargs):
         if isinstance(result, openapi.Schema.OR_REF):
             schema = openapi.resolve_ref(result, self.components)
-            schema.pop('title', None)
+            schema.pop("title", None)
 
         return result
 
@@ -57,9 +57,7 @@ class ConnectionValidations:
     @staticmethod
     def redis_connection_validation():
         try:
-            conn = redis.StrictRedis(
-                host=CACHEOPS_REDIS.host,
-                port=CACHEOPS_REDIS.port)
+            conn = redis.StrictRedis(host=CACHEOPS_REDIS.host, port=CACHEOPS_REDIS.port)
             conn.ping()
             return True
         except:

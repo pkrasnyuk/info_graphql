@@ -23,10 +23,7 @@ class CreateArticleImage(graphene.Mutation):
         article = Article.objects.get(pk=_input.article.id)
         if article is None:
             return CreateArticleImage(ok=False, articleImage=None)
-        article_image_instance = ArticleImage(
-            name=_input.name,
-            article=article
-        )
+        article_image_instance = ArticleImage(name=_input.name, article=article)
 
         try:
             article_image_instance.full_clean()

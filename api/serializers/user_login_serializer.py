@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import update_last_login, User
+from django.contrib.auth.models import User, update_last_login
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
 
@@ -18,18 +18,11 @@ class UserLoginSerializer(serializers.Serializer):
         password = data.get("password", None)
         user = authenticate(username=username, password=password)
         if user is None:
-            raise serializers.ValidationError(
-                'A user with this username and password is not found.'
-            )
+            raise serializers.ValidationError("A user with this username and password is not found.")
         try:
             payload = JWT_PAYLOAD_HANDLER(user)
             jwt_token = JWT_ENCODE_HANDLER(payload)
             update_last_login(None, user)
         except User.DoesNotExist:
-            raise serializers.ValidationError(
-                'User with given username and password does not exists'
-            )
-        return {
-            'email': user.email,
-            'token': jwt_token
-        }
+            raise serializers.ValidationError("User with given username and password does not exists")
+        return {"email": user.email, "token": jwt_token}

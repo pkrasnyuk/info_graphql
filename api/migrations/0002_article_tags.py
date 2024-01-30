@@ -6,14 +6,15 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('api', '0001_initial'),
+        ("api", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='article',
-            name='tags',
+            model_name="article",
+            name="tags",
             field=django.contrib.postgres.fields.ArrayField(
-                base_field=models.CharField(help_text='article tag', max_length=255), null=True, size=None),
+                base_field=models.CharField(help_text="article tag", max_length=255), null=True, size=None
+            ),
         ),
     ]

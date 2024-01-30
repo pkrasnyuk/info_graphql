@@ -5,7 +5,7 @@ from graphene import ObjectType
 
 from api.models.article import Article
 from api.models.article_image import ArticleImage
-from api.schema.objects.object_types import UserObjectType, ArticleObjectType, ArticleImageObjectType
+from api.schema.objects.object_types import ArticleImageObjectType, ArticleObjectType, UserObjectType
 
 
 class Query(ObjectType):
@@ -18,7 +18,7 @@ class Query(ObjectType):
     articleList = graphene.List(ArticleObjectType, search=graphene.String(), first=graphene.Int(), skip=graphene.Int())
 
     def resolve_user(self, info, **kwargs):
-        _id = kwargs.get('id')
+        _id = kwargs.get("id")
 
         if _id is not None:
             return User.objects.get(pk=_id)
@@ -26,7 +26,7 @@ class Query(ObjectType):
         return None
 
     def resolve_article(self, info, **kwargs):
-        _id = kwargs.get('id')
+        _id = kwargs.get("id")
 
         if _id is not None:
             return Article.objects.get(pk=_id)
@@ -34,7 +34,7 @@ class Query(ObjectType):
         return None
 
     def resolve_articleImage(self, info, **kwargs):
-        _id = kwargs.get('id')
+        _id = kwargs.get("id")
 
         if _id is not None:
             return ArticleImage.objects.get(pk=_id)
@@ -54,10 +54,7 @@ class Query(ObjectType):
         qs = Article.objects.all()
 
         if search:
-            article_filter = (
-                    Q(title__icontains=search) |
-                    Q(body__icontains=search)
-            )
+            article_filter = Q(title__icontains=search) | Q(body__icontains=search)
             qs = qs.filter(article_filter)
 
         if skip:

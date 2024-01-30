@@ -1,8 +1,8 @@
 import graphene
 
-from api.schema.mutations.article_image_mutations import CreateArticleImage, UpdateArticleImage, DeleteArticleImage
-from api.schema.mutations.article_mutations import CreateArticle, UpdateArticle, DeleteArticle
-from api.schema.mutations.user_mutations import CreateUser, UpdateUser, DeleteUser
+from api.schema.mutations.article_image_mutations import CreateArticleImage, DeleteArticleImage, UpdateArticleImage
+from api.schema.mutations.article_mutations import CreateArticle, DeleteArticle, UpdateArticle
+from api.schema.mutations.user_mutations import CreateUser, DeleteUser, UpdateUser
 
 
 class Mutation(graphene.ObjectType):

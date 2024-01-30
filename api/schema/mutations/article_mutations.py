@@ -24,11 +24,7 @@ class CreateArticle(graphene.Mutation):
         if creator is None:
             return CreateArticle(ok=False, article=None)
         article_instance = Article(
-            title=_input.title,
-            body=_input.body,
-            tags=_input.tags,
-            type=_input.type,
-            creator=creator
+            title=_input.title, body=_input.body, tags=_input.tags, type=_input.type, creator=creator
         )
 
         try:

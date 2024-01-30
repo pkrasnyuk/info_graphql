@@ -1,10 +1,10 @@
 import os
 from io import BytesIO
 
-from PIL import Image
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
 from django_cleanup import cleanup
+from PIL import Image
 
 from api.helpers.image_helper import name_file
 from api.models.article import Article
@@ -16,8 +16,9 @@ class ArticleImage(EntityModel):
     name = models.CharField(help_text="article image name", max_length=100, blank=False, null=False)
     image = models.ImageField(upload_to=name_file, max_length=254, blank=True, null=True)
     thumbnail_image = models.ImageField(upload_to=name_file, max_length=300, blank=True, null=True)
-    article = models.ForeignKey(Article, blank=False, null=False, on_delete=models.CASCADE, related_name='images',
-                                help_text="related article")
+    article = models.ForeignKey(
+        Article, blank=False, null=False, on_delete=models.CASCADE, related_name="images", help_text="related article"
+    )
 
     def __str__(self):
         return self.name
@@ -32,15 +33,16 @@ class ArticleImage(EntityModel):
             image_file = BytesIO()
             image.save(image_file, image.format)
             self.thumbnail_image.save(
-                f'{file_name}_{w}x{h}{ext}',
+                f"{file_name}_{w}x{h}{ext}",
                 InMemoryUploadedFile(
                     image_file,
-                    None, '',
+                    None,
+                    "",
                     self.image.file.content_type,
                     image.size,
                     self.image.file.charset,
                 ),
-                save=False
+                save=False,
             )
 
     def save(self, *args, **kwargs):
@@ -49,4 +51,4 @@ class ArticleImage(EntityModel):
         super().save(*args, **kwargs)
 
     class Meta:
-        ordering = ('name',)
+        ordering = ("name",)

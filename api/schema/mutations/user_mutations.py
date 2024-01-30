@@ -28,7 +28,7 @@ class CreateUser(graphene.Mutation):
             email=_input.email,
             is_superuser=_input.is_superuser,
             is_staff=_input.is_staff,
-            is_active=_input.is_active
+            is_active=_input.is_active,
         )
 
         try:

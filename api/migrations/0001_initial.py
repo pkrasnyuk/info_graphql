@@ -18,43 +18,86 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Article',
+            name="Article",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, help_text='entity created at')),
-                ('modified_at', models.DateTimeField(auto_now=True, help_text='entity modified at')),
-                ('title', models.CharField(help_text='article title', max_length=255,
-                                           validators=[api.helpers.validators.alphanumeric,
-                                                       django.core.validators.MinLengthValidator(10)])),
-                ('body', models.TextField(help_text='article body', max_length=2048,
-                                          validators=[django.core.validators.MinLengthValidator(15)])),
-                ('type', models.CharField(
-                    choices=[('information-technology', 'Information Technology'), ('sport', 'Sport'),
-                             ('scientific', 'Scientific'), ('art', 'Art')], default='information-technology',
-                    help_text='article type', max_length=32)),
-                ('creator', models.ForeignKey(help_text='article creator', on_delete=django.db.models.deletion.CASCADE,
-                                              related_name='articles', to=settings.AUTH_USER_MODEL)),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("created_at", models.DateTimeField(auto_now_add=True, help_text="entity created at")),
+                ("modified_at", models.DateTimeField(auto_now=True, help_text="entity modified at")),
+                (
+                    "title",
+                    models.CharField(
+                        help_text="article title",
+                        max_length=255,
+                        validators=[api.helpers.validators.alphanumeric, django.core.validators.MinLengthValidator(10)],
+                    ),
+                ),
+                (
+                    "body",
+                    models.TextField(
+                        help_text="article body",
+                        max_length=2048,
+                        validators=[django.core.validators.MinLengthValidator(15)],
+                    ),
+                ),
+                (
+                    "type",
+                    models.CharField(
+                        choices=[
+                            ("information-technology", "Information Technology"),
+                            ("sport", "Sport"),
+                            ("scientific", "Scientific"),
+                            ("art", "Art"),
+                        ],
+                        default="information-technology",
+                        help_text="article type",
+                        max_length=32,
+                    ),
+                ),
+                (
+                    "creator",
+                    models.ForeignKey(
+                        help_text="article creator",
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="articles",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'ordering': ('title',),
+                "ordering": ("title",),
             },
         ),
         migrations.CreateModel(
-            name='ArticleImage',
+            name="ArticleImage",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, help_text='entity created at')),
-                ('modified_at', models.DateTimeField(auto_now=True, help_text='entity modified at')),
-                ('name', models.CharField(help_text='article image name', max_length=100)),
-                ('image', models.ImageField(blank=True, max_length=254, null=True,
-                                            upload_to=api.helpers.image_helper.name_file)),
-                ('thumbnail_image', models.ImageField(blank=True, max_length=300, null=True,
-                                                      upload_to=api.helpers.image_helper.name_file)),
-                ('article', models.ForeignKey(help_text='related article', on_delete=django.db.models.deletion.CASCADE,
-                                              related_name='images', to='api.Article')),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("created_at", models.DateTimeField(auto_now_add=True, help_text="entity created at")),
+                ("modified_at", models.DateTimeField(auto_now=True, help_text="entity modified at")),
+                ("name", models.CharField(help_text="article image name", max_length=100)),
+                (
+                    "image",
+                    models.ImageField(
+                        blank=True, max_length=254, null=True, upload_to=api.helpers.image_helper.name_file
+                    ),
+                ),
+                (
+                    "thumbnail_image",
+                    models.ImageField(
+                        blank=True, max_length=300, null=True, upload_to=api.helpers.image_helper.name_file
+                    ),
+                ),
+                (
+                    "article",
+                    models.ForeignKey(
+                        help_text="related article",
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="images",
+                        to="api.Article",
+                    ),
+                ),
             ],
             options={
-                'ordering': ('name',),
+                "ordering": ("name",),
             },
         ),
     ]
